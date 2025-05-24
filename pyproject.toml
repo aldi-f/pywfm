@@ -1,0 +1,23 @@
+[project]
+name = "pywfm"
+description = "An asynchronous Python wrapper for Warframe.Market API"
+version = "0.0.1-dev"
+authors = [{ name = "aldi-f" }]
+dependencies = ["aiohttp", "pydantic"]
+
+[project.urls]
+Homepage = "https://github.com/aldi-f/pywfm"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-url = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
+[tool.pyright]
+venvPath = "."
+venv = "venv"
