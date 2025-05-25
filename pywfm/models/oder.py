@@ -1,8 +1,8 @@
-from pydantic import BaseModel, Field
+import msgspec
 from typing import Optional
 from .user import UserShort
 
-class Order(BaseModel):
+class Order(msgspec.Struct):
     """
     Model for trade orders.
     
@@ -27,17 +27,17 @@ class Order(BaseModel):
     type: str
     platinum: int
     quantity: int
-    per_trade: Optional[int] = Field(default=None, alias="perTrade")
+    visible: bool
+    created_at: str = msgspec.field(name="createdAt")
+    updated_at: str = msgspec.field(name="updatedAt")
+    item_id: str = msgspec.field(name="itemId")
+    group: str
+    per_trade: Optional[int] = msgspec.field(default=None, name="perTrade")
     rank: Optional[int] = None
     charges: Optional[int] = None
     subtype: Optional[str] = None
-    amber_stars: Optional[int] = Field(default=None, alias="amberStars")
-    cyan_stars: Optional[int] = Field(default=None, alias="cyanStars")
-    visible: bool
-    created_at: str = Field(alias="createdAt")
-    updated_at: str = Field(alias="updatedAt")
-    item_id: str = Field(alias="itemId")
-    group: str
+    amber_stars: Optional[int] = msgspec.field(default=None, name="amberStars")
+    cyan_stars: Optional[int] = msgspec.field(default=None, name="cyanStars")
 
 
 class OrderWithUser(Order):

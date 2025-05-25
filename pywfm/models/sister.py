@@ -1,52 +1,52 @@
-from pydantic import BaseModel, Field
+import msgspec
 from ..common.options import LanguageCode
 
 
-class SisterWeaponI18N(BaseModel):
+class SisterWeaponI18N(msgspec.Struct):
     """Localization data for a Sister weapon."""
-    name: str = Field(alias="itemName")
-    wiki_link: str | None = Field(default=None, alias="wikiLink")
+    name: str = msgspec.field(name="itemName")
     icon: str
     thumb: str
+    wiki_link: str | None = msgspec.field(default=None, name="wikiLink")
 
 
-class SisterWeapon(BaseModel):
+class SisterWeapon(msgspec.Struct):
     """Model for Sister weapons."""
     id: str
     slug: str
-    game_ref: str = Field(alias="gameRef")
-    req_mastery_rank: int = Field(alias="reqMasteryRank")
-    i18n: dict[LanguageCode, SisterWeaponI18N] = Field(default_factory=dict)
+    game_ref: str = msgspec.field(name="gameRef")
+    req_mastery_rank: int = msgspec.field(name="reqMasteryRank")
+    i18n: dict[LanguageCode, SisterWeaponI18N] = msgspec.field(default_factory=dict)
 
 
-class SisterEphemeraI18N(BaseModel):
+class SisterEphemeraI18N(msgspec.Struct):
     """Localization data for a Sister ephemera."""
-    name: str = Field(alias="itemName")
+    name: str = msgspec.field(name="itemName")
     icon: str
     thumb: str
 
 
-class SisterEphemera(BaseModel):
+class SisterEphemera(msgspec.Struct):
     """Model for Sister ephemeras."""
     id: str
     slug: str
-    game_ref: str = Field(alias="gameRef")
+    game_ref: str = msgspec.field(name="gameRef")
     animation: str
     element: str
-    i18n: dict[LanguageCode, SisterEphemeraI18N] = Field(default_factory=dict)
+    i18n: dict[LanguageCode, SisterEphemeraI18N] = msgspec.field(default_factory=dict)
 
 
-class SisterQuirkI18N(BaseModel):
+class SisterQuirkI18N(msgspec.Struct):
     """Localization data for a Sister quirk."""
-    name: str = Field(alias="itemName")
-    description: str | None = Field(default=None)
+    name: str = msgspec.field(name="itemName")
     icon: str
     thumb: str
+    description: str | None = None
 
 
-class SisterQuirk(BaseModel):
+class SisterQuirk(msgspec.Struct):
     """Model for Sister quirks."""
     id: str
     slug: str
     group: str | None = None
-    i18n: dict[LanguageCode, SisterQuirkI18N] = Field(default_factory=dict)
+    i18n: dict[LanguageCode, SisterQuirkI18N] = msgspec.field(default_factory=dict)

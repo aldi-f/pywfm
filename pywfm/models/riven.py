@@ -1,44 +1,44 @@
 from typing import Literal
-from pydantic import BaseModel, Field
+import msgspec
 from ..common.options import LanguageCode
 
 RivenType = Literal["rifle", "shotgun", "pistol", "melee", "kitgun", "zaw"]
 
-class RivenI18N(BaseModel):
+class RivenI18N(msgspec.Struct):
     """Localization data for a Riven mod."""
-    name: str = Field(alias="itemName")
-    wiki_link: str | None = Field(default=None, alias="wikiLink")
+    name: str = msgspec.field(name="itemName")
     icon: str
     thumb: str
+    wiki_link: str | None = msgspec.field(default=None, name="wikiLink")
 
-class RivenAttributeI18N(BaseModel):
+class RivenAttributeI18N(msgspec.Struct):
     """Localization data for a Riven attribute."""
-    name: str = Field(alias="effect")
+    name: str = msgspec.field(name="effect")
     icon: str
     thumb: str
 
-class Riven(BaseModel):
+class Riven(msgspec.Struct):
     """Model for Riven mods."""
     id: str
     slug: str
-    game_ref: str = Field(alias="gameRef")
-    group: str | None = None
-    riven_type: str | None = Field(alias="rivenType")
+    game_ref: str = msgspec.field(name="gameRef")
     disposition: float
-    req_mastery_rank: int = Field(alias="reqMasteryRank")
-    i18n: dict[LanguageCode, RivenI18N] = Field(default_factory=dict)
+    req_mastery_rank: int = msgspec.field(name="reqMasteryRank")
+    group: str | None = None
+    riven_type: str | None = msgspec.field(default=None, name="rivenType")
+    i18n: dict[LanguageCode, RivenI18N] = msgspec.field(default_factory=dict)
 
-class RivenAttribute(BaseModel):
+class RivenAttribute(msgspec.Struct):
     """Model for Riven mod attributes."""
     id: str
     slug: str
-    game_ref: str = Field(alias="gameRef")
-    group: str | None = None
+    game_ref: str = msgspec.field(name="gameRef")
     prefix: str
     suffix: str
-    exclusive_to: list[str] | None = Field(default=None, alias="exclusiveTo")
-    positive_is_negative: bool | None = Field(default=None, alias="positiveIsNegative")
+    group: str | None = None
+    i18n: dict[LanguageCode, RivenAttributeI18N] = msgspec.field(default_factory=dict)
+    exclusive_to: list[str] | None = msgspec.field(default=None, name="exclusiveTo")
+    positive_is_negative: bool | None = msgspec.field(default=None, name="positiveIsNegative")
     unit: str | None = None
-    positive_only: bool | None = Field(default=None, alias="positiveOnly")
-    negative_only: bool | None = Field(default=None, alias="negativeOnly")
-    i18n: dict[LanguageCode, RivenAttributeI18N] = Field(default_factory=dict)
+    positive_only: bool | None = msgspec.field(default=None, name="positiveOnly")
+    negative_only: bool | None = msgspec.field(default=None, name="negativeOnly")

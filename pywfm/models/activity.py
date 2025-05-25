@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel, Field
+import msgspec
 from enum import Enum
 
 class ActivityType(str, Enum):
@@ -10,7 +10,7 @@ class ActivityType(str, Enum):
     EMPTY = ""
 
 
-class Activity(BaseModel):
+class Activity(msgspec.Struct):
     """
     Model for user activity information.
     
@@ -21,4 +21,4 @@ class Activity(BaseModel):
     """
     type: ActivityType
     details: Optional[str] = None
-    started_at: Optional[str] = Field(default=None, alias="startedAt")
+    started_at: Optional[str] = msgspec.field(default=None, name="startedAt")

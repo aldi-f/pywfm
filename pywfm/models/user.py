@@ -1,8 +1,8 @@
-from pydantic import BaseModel, Field
+import msgspec
 from .activity import Activity
 from .achievement import Achievement
 
-class UserShort(BaseModel):
+class UserShort(msgspec.Struct):
     """
     Short form user data model.
     
@@ -19,15 +19,15 @@ class UserShort(BaseModel):
         last_seen: Timestamp of the user's last online presence
     """
     id: str
-    ingame_name: str = Field(alias="ingameName")
-    avatar: str | None = None
+    ingame_name: str = msgspec.field(name="ingameName")
     reputation: int
     locale: str
     platform: str
     crossplay: bool
     status: str
     activity: Activity
-    last_seen: str = Field(alias="lastSeen")
+    last_seen: str = msgspec.field(name="lastSeen")
+    avatar: str | None = None
 
 
 class User(UserShort):
@@ -47,14 +47,11 @@ class User(UserShort):
     """
     background: str | None = None
     about: str | None = None
-    mastery_level: int | None = Field(default=None, alias="masteryLevel")
-    achievement_showcase: list[Achievement] = Field(
-        default_factory=list,
-        alias="achievementShowcase"
-    )
+    mastery_level: int | None = msgspec.field(default=None, name="masteryLevel")
+    achievement_showcase: list[Achievement] = msgspec.field(default_factory=list, name="achievementShowcase")
     banned: bool | None = None
-    ban_until: str | None = Field(default=None, alias="banUntil")
+    ban_until: str | None = msgspec.field(default=None, name="banUntil")
     warned: bool | None = None
-    warn_message: str | None = Field(default=None, alias="warnMessage")
-    ban_message: str | None = Field(default=None, alias="banMessage")
+    warn_message: str | None = msgspec.field(default=None, name="warnMessage")
+    ban_message: str | None = msgspec.field(default=None, name="banMessage")
 

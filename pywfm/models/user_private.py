@@ -1,8 +1,7 @@
 from enum import Enum
 from typing import List, Optional
-from pydantic import BaseModel, Field
+import msgspec
 from .activity import Activity
-from .user import UserShort
 from .achievement import Achievement
 
 
@@ -10,74 +9,95 @@ class Role(str, Enum):
     """User roles in the system."""
     USER = "user"
     MODERATOR = "moderator"
-    # Add other roles as needed
+    ADMIN = "admin"
 
 
 class Tier(str, Enum):
     """Subscription tiers."""
-    # none, bronze, silver, gold, diamond
     NONE = "none"
     BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
     DIAMOND = "diamond"
 
-class LinkedAccounts(BaseModel):
+
+class LinkedAccounts(msgspec.Struct):
     """Model for linked external accounts."""
     pass
 
 
-class UserPrivate(UserShort):
+class UserPrivate(msgspec.Struct):
     """
     Private user profile with full details and sensitive information.
     
     Attributes:
-        role: Assigned user role (e.g., moderator, user)
-        about: Optional HTML-formatted description
-        about_raw: Optional raw markdown description
-        mastery_rank: In-game mastery level
-        credits: In-game currency balance
-        theme: Preferred UI color scheme
-        achievement_showcase: List of showcased achievements
-        verification: Account verification status
-        check_code: Unique verification code
-        tier: Subscription tier level
-        subscription: Active subscription status
-        warned: Whether user has been warned
-        warn_message: Warning message if any
-        banned: Whether user is banned
-        ban_until: Ban expiration date if any
-        ban_message: Ban reason if any
-        reviews_left: Remaining reviews for today
-        unread_messages: Count of unread messages
-        ignore_list: List of ignored user IDs
-        delete_in_progress: Whether account deletion is pending
-        delete_at: Scheduled deletion date if any
-        linked_accounts: Connected external accounts
-        has_email: Whether email is verified
+        id: Unique identifier of the user
+        role: User's role in the system (e.g., user, moderator, admin)
+        ingame_name: In-game name of the user
+        reputation: Reputation score
+        locale: Preferred communication language (e.g., 'en', 'ko', 'es')
+        platform: Gaming platform used by the user
+        crossplay: Whether the user has crossplay enabled
+        status: Current status of the user
+        activity: Current activity of the user
+        last_seen: Timestamp of the user's last online presence
+        mastery_rank: In-game mastery rank
+        credits: User's credit balance
+        theme: User's selected theme
+        verification: Whether the user is verified
+        check_code: Verification check code
+        tier: Subscription tier of the user
+        subscription: Whether the user has an active subscription
+        linked_accounts: Linked external accounts information
+        has_email: Whether the user has an email address associated with their account
         created_at: Account creation timestamp
+        reviews_left: Number of reviews left by the user
+        unread_messages: Count of unread messages in the user's inbox
+        avatar: Optional avatar image URL
+        achievement_showcase: List of achievements showcased by the user
+        ignore_list: List of user IDs that this user has ignored
+        about: Optional HTML-formatted user description
+        about_raw: Optional raw text version of the user's description
+        warned: Whether the user has been warned (mod/admin only)
+        warn_message: Optional warning message (mod/admin only)
+        banned: Whether the user is currently banned (mod/admin only)
+        ban_until: Optional timestamp until which the user is banned (mod/admin only)
+        ban_message: Optional reason for the ban (mod/admin only)
+        delete_in_progress: Whether the user account deletion is in progress (mod/admin only)
+        delete_at: Optional timestamp when the account deletion is scheduled (mod/admin only)
     """
+    id: str
     role: Role
-    about: Optional[str] = None
-    about_raw: Optional[str] = Field(default=None, alias="aboutRaw")
-    mastery_rank: int = Field(alias="masteryRank")
+    ingame_name: str = msgspec.field(name="ingameName")
+    reputation: int
+    locale: str
+    platform: str
+    crossplay: bool
+    status: str
+    activity: Activity
+    last_seen: str = msgspec.field(name="lastSeen")
+    mastery_rank: int = msgspec.field(name="masteryRank")
     credits: int
     theme: str
-    achievement_showcase: List[Achievement] = Field(default_factory=list, alias="achievementShowcase")
     verification: bool
-    check_code: str = Field(alias="checkCode")
+    check_code: str = msgspec.field(name="checkCode")
     tier: Tier
     subscription: bool
+    linked_accounts: LinkedAccounts = msgspec.field(name="linkedAccounts")
+    has_email: bool = msgspec.field(name="hasEmail")
+    created_at: str = msgspec.field(name="createdAt")
+    reviews_left: int = msgspec.field(name="reviewsLeft")
+    unread_messages: int = msgspec.field(name="unreadMessages")
+    # Optional fields
+    avatar: str | None = None
+    achievement_showcase: List[Achievement] = msgspec.field(default_factory=list, name="achievementShowcase")
+    ignore_list: List[str] = msgspec.field(default_factory=list, name="ignoreList")
+    about: Optional[str] = None
+    about_raw: Optional[str] = msgspec.field(default=None, name="aboutRaw")
     warned: Optional[bool] = None
-    warn_message: Optional[str] = Field(default=None, alias="warnMessage")
+    warn_message: Optional[str] = msgspec.field(default=None, name="warnMessage")
     banned: Optional[bool] = None
-    ban_until: Optional[str] = Field(default=None, alias="banUntil")
-    ban_message: Optional[str] = Field(default=None, alias="banMessage")
-    reviews_left: int = Field(alias="reviewsLeft")
-    unread_messages: int = Field(alias="unreadMessages")
-    ignore_list: List[str] = Field(default_factory=list, alias="ignoreList")
-    delete_in_progress: Optional[bool] = Field(default=None, alias="deleteInProgress")
-    delete_at: Optional[str] = Field(default=None, alias="deleteAt")
-    linked_accounts: LinkedAccounts = Field(alias="linkedAccounts")
-    has_email: bool = Field(alias="hasEmail")
-    created_at: str = Field(alias="createdAt")
+    ban_until: Optional[str] = msgspec.field(default=None, name="banUntil")
+    ban_message: Optional[str] = msgspec.field(default=None, name="banMessage")
+    delete_in_progress: Optional[bool] = msgspec.field(default=None, name="deleteInProgress")
+    delete_at: Optional[str] = msgspec.field(default=None, name="deleteAt")

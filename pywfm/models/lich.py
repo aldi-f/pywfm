@@ -1,53 +1,53 @@
-from pydantic import BaseModel, Field
+import msgspec
 from ..common.options import LanguageCode
 
 
 # Lich Weapon
-class LichWeaponI18N(BaseModel):
+class LichWeaponI18N(msgspec.Struct):
     """Localization data for a Lich weapon."""
-    name: str = Field(alias="itemName")  # Changed to match Go struct's json tag
-    wiki_link: str | None = Field(default=None, alias="wikiLink")
+    name: str = msgspec.field(name="itemName")  # Changed to match Go struct's json tag
     icon: str
     thumb: str
+    wiki_link: str | None = msgspec.field(default=None, name="wikiLink")
 
-class LichWeapon(BaseModel):
+class LichWeapon(msgspec.Struct):
     """Model for Kuva/Sister Lich weapons."""
     id: str
     slug: str
-    game_ref: str = Field(alias="gameRef")
-    req_mastery_rank: int = Field(alias="reqMasteryRank")
-    i18n: dict[LanguageCode, LichWeaponI18N] = Field(default_factory=dict)
+    game_ref: str = msgspec.field(name="gameRef")
+    req_mastery_rank: int = msgspec.field(name="reqMasteryRank")
+    i18n: dict[LanguageCode, LichWeaponI18N] = msgspec.field(default_factory=dict)
 
 
 # Lich Ephemera
-class LichEphemeraI18N(BaseModel):
+class LichEphemeraI18N(msgspec.Struct):
     """Localization data for a Lich ephemera."""
-    name: str = Field(alias="itemName")
+    name: str = msgspec.field(name="itemName")
     icon: str
     thumb: str
 
-class LichEphemera(BaseModel):
+class LichEphemera(msgspec.Struct):
     """Model for Kuva/Sister Lich ephemeras."""
     id: str
     slug: str
-    game_ref: str = Field(alias="gameRef")
+    game_ref: str = msgspec.field(name="gameRef")
     animation: str
     element: str
-    i18n: dict[LanguageCode, LichEphemeraI18N] = Field(default_factory=dict)
+    i18n: dict[LanguageCode, LichEphemeraI18N] = msgspec.field(default_factory=dict)
 
 
 # Lich Quirk
-class LichQuirkI18N(BaseModel):
+class LichQuirkI18N(msgspec.Struct):
     """Localization data for a Lich quirk."""
-    name: str = Field(alias="itemName")
-    description: str | None = Field(default=None)
-    icon: str | None = Field(default=None)
-    thumb: str | None = Field(default=None)
+    name: str = msgspec.field(name="itemName")
+    description: str | None = None
+    icon: str | None = None
+    thumb: str | None = None
 
 
-class LichQuirk(BaseModel):
+class LichQuirk(msgspec.Struct):
     """Model for Kuva/Sister Lich quirks."""
     id: str
     slug: str
     group: str | None = None
-    i18n: dict[LanguageCode, LichQuirkI18N] = Field(default_factory=dict)
+    i18n: dict[LanguageCode, LichQuirkI18N] = msgspec.field(default_factory=dict)

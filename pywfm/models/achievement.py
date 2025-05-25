@@ -1,8 +1,8 @@
-from pydantic import BaseModel
+import msgspec
 from ..common.options import LanguageCode
 
 
-class AchievementI18N(BaseModel):
+class AchievementI18N(msgspec.Struct):
     """
     Localized information for an achievement.
     
@@ -14,7 +14,7 @@ class AchievementI18N(BaseModel):
     description: str
 
 
-class Achievement(BaseModel):
+class Achievement(msgspec.Struct):
     """
     Model for site achievements.
     

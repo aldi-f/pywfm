@@ -1,43 +1,43 @@
-from pydantic import BaseModel, Field
+import msgspec
 from ..common.options import LanguageCode
 
 
-class ItemI18N(BaseModel):
+class ItemI18N(msgspec.Struct):
     """Localization data for an item."""
     name: str
-    description: str | None = None
-    wiki_link: str | None = Field(default=None, alias="wikiLink")
     icon: str
     thumb: str
-    sub_icon: str | None = Field(default=None, alias="subIcon")
+    description: str | None = None
+    wiki_link: str | None = msgspec.field(default=None, name="wikiLink")
+    sub_icon: str | None = msgspec.field(default=None, name="subIcon")
 
-class ItemShort(BaseModel):
+class ItemShort(msgspec.Struct):
     """Short form item data model."""
     id: str
     slug: str
-    game_ref: str = Field(alias="gameRef")
-    tags: list[str] = Field(default_factory=list)
-    i18n: dict[LanguageCode, ItemI18N] = Field(default_factory=dict)
-    max_rank: int | None = Field(default=None, alias="maxRank")
-    max_charges: int | None = Field(default=None, alias="maxCharges")
+    game_ref: str = msgspec.field(name="gameRef")
+    tags: list[str] = msgspec.field(default_factory=list)
+    i18n: dict[LanguageCode, ItemI18N] = msgspec.field(default_factory=dict)
+    max_rank: int | None = msgspec.field(default=None, name="maxRank")
+    max_charges: int | None = msgspec.field(default=None, name="maxCharges")
     vaulted: bool | None = None
     ducats: int | None = None
-    amber_stars: int | None = Field(default=None, alias="amberStars")
-    cyan_stars: int | None = Field(default=None, alias="cyanStars")
-    base_endo: int | None = Field(default=None, alias="baseEndo")
-    endo_multiplier: float | None = Field(default=None, alias="endoMultiplier")
-    subtypes: list[str] = Field(default_factory=list)
+    amber_stars: int | None = msgspec.field(default=None, name="amberStars")
+    cyan_stars: int | None = msgspec.field(default=None, name="cyanStars")
+    base_endo: int | None = msgspec.field(default=None, name="baseEndo")
+    endo_multiplier: float | None = msgspec.field(default=None, name="endoMultiplier")
+    subtypes: list[str] = msgspec.field(default_factory=list)
 
 class Item(ItemShort):
     """Full item data model that extends ItemShort."""
     tradable: bool | None = None
-    set_root: bool | None = Field(default=None, alias="setRoot")
-    set_parts: list[str] | None = Field(default=None, alias="setParts")
-    quantity_in_set: int | None = Field(default=None, alias="quantityInSet")
+    set_root: bool | None = msgspec.field(default=None, name="setRoot")
+    set_parts: list[str] | None = msgspec.field(default=None, name="setParts")
+    quantity_in_set: int | None = msgspec.field(default=None, name="quantityInSet")
     rarity: str | None = None
-    bulk_tradable: bool | None = Field(default=None, alias="bulkTradable")
-    max_amber_stars: int | None = Field(default=None, alias="maxAmberStars")
-    max_cyan_stars: int | None = Field(default=None, alias="maxCyanStars")
-    req_mastery_rank: int | None = Field(default=None, alias="reqMasteryRank")
-    trading_tax: int | None = Field(default=None, alias="tradingTax")
+    bulk_tradable: bool | None = msgspec.field(default=None, name="bulkTradable")
+    max_amber_stars: int | None = msgspec.field(default=None, name="maxAmberStars")
+    max_cyan_stars: int | None = msgspec.field(default=None, name="maxCyanStars")
+    req_mastery_rank: int | None = msgspec.field(default=None, name="reqMasteryRank")
+    trading_tax: int | None = msgspec.field(default=None, name="tradingTax")
     vosfor: int | None = None
