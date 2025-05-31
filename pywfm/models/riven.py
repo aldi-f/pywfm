@@ -19,7 +19,7 @@ class RivenAttributeI18N(msgspec.Struct):
     icon: str
     thumb: str
 
-class Riven(msgspec.Struct):
+class RivenModel(msgspec.Struct):
     """Model for Riven mods."""
     id: str
     slug: str
@@ -30,7 +30,7 @@ class Riven(msgspec.Struct):
     riven_type: str | None = msgspec.field(default=None, name="rivenType")
     i18n: dict[LanguageCode, RivenI18N] = msgspec.field(default_factory=dict)
 
-class RivenAttribute(msgspec.Struct):
+class RivenAttributeModel(msgspec.Struct):
     """Model for Riven mod attributes."""
     id: str
     slug: str
