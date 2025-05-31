@@ -1,30 +1,37 @@
 import aiohttp
-from typing import Type, TypeVar
-import msgspec
+from typing import TypeVar, Type
 from .common import BASE_URL
+from .common.base import BaseRequest, Base
 
-T = TypeVar('T')
+T = TypeVar('T', bound=BaseRequest)
 
 class WarframeMarketClient:
-    """Client for making requests to the Warframe Market API."""
+    """Client for interacting with Warframe Market API."""
     
     def __init__(self, base_url: str = BASE_URL):
         self.base_url = base_url
-    
-    async def get(self, endpoint: str, model_class: type[T]) -> T:
-        """
-        Asynchronous GET request to the API and validate the response.
+        self.response = None
+    async def get(self, request_class: Type[T]) -> T:
+        """Perform a GET request using the specified request class.
         
         Args:
-            endpoint: API endpoint path (without base URL)
-            model_class: msgspec Struct to validate against
+            request_class: The request class that defines the endpoint and response type
+            
         Returns:
-            Validated model instance
+            The parsed API response
         """
-        url = f"{self.base_url}{endpoint}"
-        
+        url = f"{self.base_url}{request_class.__endpoint__}"
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
-                response.raise_for_status()
+                if response.status != 200:
+                    raise Exception(f"Error {response.status}: {await response.text()}")
                 data = await response.text()
-                return msgspec.json.decode(data, type=model_class)
+                return request_class._decode(data)
+
+    async def __aenter__(self):
+        """Enter async context manager."""
+        return self
+    
+    async def __aexit__(self, exc_type, exc_value, traceback):
+        """Exit async context manager."""
+        pass

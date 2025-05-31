@@ -17,7 +17,6 @@ class Language(Enum):
     def __str__(self):
         return self.value
 
-
 class Platform(Enum):
     PC = "pc"
     PS4 = "ps4"

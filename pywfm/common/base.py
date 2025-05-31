@@ -1,29 +1,19 @@
 import msgspec
-from typing import Any, Generic, Optional, TypeVar, ClassVar, Type
-from ..models.item import ItemShortModel
+from typing import TypeVar, ClassVar, Type, Optional, Any
 
 
-class BaseData(msgspec.Struct, kw_only=True):
-    """Base model for all Warframe Market API calls."""
-    pass
-
-T = TypeVar('T', bound=BaseData)
-
-class BaseResponse(msgspec.Struct, Generic[T]):
-    """Base model for all Warframe Market API responses."""
+class Base(msgspec.Struct, kw_only=True):
+    """Base model"""
     api_version: str = msgspec.field(name="apiVersion")
-    data: T
     error: Optional[Any] = None
 
-class BaseRequest(msgspec.Struct):
+T = TypeVar('T', bound=Base)
+
+class BaseRequest(Base):
     """Base model for all Warframe Market API requests."""
     __endpoint__: ClassVar[str]
-    __data__: ClassVar[Type]
 
     @classmethod
-    def _decode(cls, response: str) -> BaseResponse[T]:
+    def _decode(cls: Type[T], response: str) -> T:
         """Decode the response string into a BaseResponse object."""
-        response_type = cls.__data__ 
-        decoder = msgspec.json.Decoder(BaseResponse[response_type])
-        return decoder.decode(response)
-
+        return msgspec.json.decode(response, type=cls)
