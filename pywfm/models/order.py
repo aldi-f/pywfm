@@ -1,8 +1,9 @@
 import msgspec
 from typing import Optional
-from .user import UserShort
 
-class Order(msgspec.Struct):
+from .user import UserShortModel
+
+class OrderModel(msgspec.Struct):
     """
     Model for trade orders.
     
@@ -40,7 +41,7 @@ class Order(msgspec.Struct):
     cyan_stars: Optional[int] = msgspec.field(default=None, name="cyanStars")
 
 
-class OrderWithUser(Order):
+class OrderWithUserModel(OrderModel, kw_only=True):
     """
     Model for trade orders with associated user information.
     
@@ -49,4 +50,4 @@ class OrderWithUser(Order):
     Additional Attributes:
         user: Basic profile information of the order's creator
     """
-    user: UserShort
+    user: UserShortModel

@@ -1,8 +1,9 @@
 import msgspec
-from .activity import Activity
-from .achievement import Achievement
+from .activity import ActivityModel
+from .achievement import AchievementModel
 
-class UserShort(msgspec.Struct):
+
+class UserShortModel(msgspec.Struct):
     """
     Short form user data model.
     
@@ -25,14 +26,14 @@ class UserShort(msgspec.Struct):
     platform: str
     crossplay: bool
     status: str
-    activity: Activity
+    activity: ActivityModel
     last_seen: str = msgspec.field(name="lastSeen")
     avatar: str | None = None
 
 
-class User(UserShort):
+class UserModel(UserShortModel, kw_only=True):
     """
-    Full user profile model that extends UserShort.
+    Full user profile model that extends UserShortModel.
     
     Additional Attributes:
         background: Optional profile background image URL
@@ -48,7 +49,7 @@ class User(UserShort):
     background: str | None = None
     about: str | None = None
     mastery_level: int | None = msgspec.field(default=None, name="masteryLevel")
-    achievement_showcase: list[Achievement] = msgspec.field(default_factory=list, name="achievementShowcase")
+    achievement_showcase: list[AchievementModel] = msgspec.field(default_factory=list, name="achievementShowcase")
     banned: bool | None = None
     ban_until: str | None = msgspec.field(default=None, name="banUntil")
     warned: bool | None = None

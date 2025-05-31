@@ -1,8 +1,7 @@
 import msgspec
 from ..common.options import LanguageCode
 
-
-class LocationI18N(msgspec.Struct):
+class LocationI18NModel(msgspec.Struct):
     """Localization data for a location."""
     node_name: str = msgspec.field(name="nodeName")
     icon: str
@@ -10,7 +9,7 @@ class LocationI18N(msgspec.Struct):
     system_name: str | None = msgspec.field(default=None, name="systemName")
 
 
-class Location(msgspec.Struct):
+class LocationModel(msgspec.Struct):
     """Model for locations."""
     id: str
     slug: str
@@ -18,4 +17,4 @@ class Location(msgspec.Struct):
     faction: str | None = None
     min_level: int | None = msgspec.field(default=None, name="minLevel")
     max_level: int | None = msgspec.field(default=None, name="maxLevel")
-    i18n: dict[LanguageCode, LocationI18N] = msgspec.field(default_factory=dict)
+    i18n: dict[LanguageCode, LocationI18NModel] = msgspec.field(default_factory=dict)

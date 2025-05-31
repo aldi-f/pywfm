@@ -1,6 +1,8 @@
-from typing import Literal
 import msgspec
+from typing import Literal
+
 from ..common.options import LanguageCode
+
 
 RivenType = Literal["rifle", "shotgun", "pistol", "melee", "kitgun", "zaw"]
 

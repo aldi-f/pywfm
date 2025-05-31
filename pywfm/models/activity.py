@@ -10,7 +10,7 @@ class ActivityType(str, Enum):
     EMPTY = ""
 
 
-class Activity(msgspec.Struct):
+class ActivityModel(msgspec.Struct):
     """
     Model for user activity information.
     

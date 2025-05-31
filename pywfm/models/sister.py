@@ -1,4 +1,5 @@
 import msgspec
+
 from ..common.options import LanguageCode
 
 
@@ -36,7 +37,7 @@ class SisterEphemera(msgspec.Struct):
     i18n: dict[LanguageCode, SisterEphemeraI18N] = msgspec.field(default_factory=dict)
 
 
-class SisterQuirkI18N(msgspec.Struct):
+class SisterQuirkI18NModel(msgspec.Struct):
     """Localization data for a Sister quirk."""
     name: str = msgspec.field(name="itemName")
     icon: str
@@ -44,9 +45,9 @@ class SisterQuirkI18N(msgspec.Struct):
     description: str | None = None
 
 
-class SisterQuirk(msgspec.Struct):
+class SisterQuirkModel(msgspec.Struct):
     """Model for Sister quirks."""
     id: str
     slug: str
     group: str | None = None
-    i18n: dict[LanguageCode, SisterQuirkI18N] = msgspec.field(default_factory=dict)
+    i18n: dict[LanguageCode, SisterQuirkI18NModel] = msgspec.field(default_factory=dict)

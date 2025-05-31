@@ -1,8 +1,7 @@
 import msgspec
 from ..common.options import LanguageCode
 
-
-class AchievementI18N(msgspec.Struct):
+class AchievementI18NModel(msgspec.Struct):
     """
     Localized information for an achievement.
     
@@ -14,7 +13,7 @@ class AchievementI18N(msgspec.Struct):
     description: str
 
 
-class Achievement(msgspec.Struct):
+class AchievementModel(msgspec.Struct):
     """
     Model for site achievements.
     
@@ -29,4 +28,4 @@ class Achievement(msgspec.Struct):
     icon: str
     thumb: str
     type: str
-    i18n: dict[LanguageCode, AchievementI18N]
+    i18n: dict[LanguageCode, AchievementI18NModel]

@@ -1,8 +1,9 @@
+import msgspec
 from enum import Enum
 from typing import List, Optional
-import msgspec
-from .activity import Activity
-from .achievement import Achievement
+
+from .activity import ActivityModel
+from .achievement import AchievementModel
 
 
 class Role(str, Enum):
@@ -26,7 +27,7 @@ class LinkedAccounts(msgspec.Struct):
     pass
 
 
-class UserPrivate(msgspec.Struct):
+class UserPrivateModel(msgspec.Struct):
     """
     Private user profile with full details and sensitive information.
     
@@ -74,7 +75,7 @@ class UserPrivate(msgspec.Struct):
     platform: str
     crossplay: bool
     status: str
-    activity: Activity
+    activity: ActivityModel
     last_seen: str = msgspec.field(name="lastSeen")
     mastery_rank: int = msgspec.field(name="masteryRank")
     credits: int
@@ -90,7 +91,7 @@ class UserPrivate(msgspec.Struct):
     unread_messages: int = msgspec.field(name="unreadMessages")
     # Optional fields
     avatar: str | None = None
-    achievement_showcase: List[Achievement] = msgspec.field(default_factory=list, name="achievementShowcase")
+    achievement_showcase: List[AchievementModel] = msgspec.field(default_factory=list, name="achievementShowcase")
     ignore_list: List[str] = msgspec.field(default_factory=list, name="ignoreList")
     about: Optional[str] = None
     about_raw: Optional[str] = msgspec.field(default=None, name="aboutRaw")

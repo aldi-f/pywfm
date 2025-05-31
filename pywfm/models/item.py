@@ -1,8 +1,7 @@
 import msgspec
 from ..common.options import LanguageCode
 
-
-class ItemI18N(msgspec.Struct):
+class ItemI18NModel(msgspec.Struct):
     """Localization data for an item."""
     name: str
     icon: str
@@ -11,13 +10,13 @@ class ItemI18N(msgspec.Struct):
     wiki_link: str | None = msgspec.field(default=None, name="wikiLink")
     sub_icon: str | None = msgspec.field(default=None, name="subIcon")
 
-class ItemShort(msgspec.Struct):
+class ItemShortModel(msgspec.Struct):
     """Short form item data model."""
     id: str
     slug: str
     game_ref: str = msgspec.field(name="gameRef")
     tags: list[str] = msgspec.field(default_factory=list)
-    i18n: dict[LanguageCode, ItemI18N] = msgspec.field(default_factory=dict)
+    i18n: dict[LanguageCode, ItemI18NModel] = msgspec.field(default_factory=dict)
     max_rank: int | None = msgspec.field(default=None, name="maxRank")
     max_charges: int | None = msgspec.field(default=None, name="maxCharges")
     vaulted: bool | None = None
@@ -28,8 +27,8 @@ class ItemShort(msgspec.Struct):
     endo_multiplier: float | None = msgspec.field(default=None, name="endoMultiplier")
     subtypes: list[str] = msgspec.field(default_factory=list)
 
-class Item(ItemShort):
-    """Full item data model that extends ItemShort."""
+class ItemModel(ItemShortModel):
+    """Full item data model that extends ItemShortModel."""
     tradable: bool | None = None
     set_root: bool | None = msgspec.field(default=None, name="setRoot")
     set_parts: list[str] | None = msgspec.field(default=None, name="setParts")
