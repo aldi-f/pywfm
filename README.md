@@ -1,17 +1,16 @@
-# pywfm
-Warframe Market API for python
-
-
+# warframe-market.py
+Warframe Market API for Python
 
 # Installation (Not yet available)
 ```bash
+pip install warframe-market.py
 ```
 
 # Usage
 ```python
 import asyncio
-from pywfm.client import WarframeMarketClient
-from pywfm.api.item import Items, Item
+from warframe_market.client import WarframeMarketClient
+from warframe_market.api.item import Items, Item
 
 async def main():
     async with WarframeMarketClient() as client:
@@ -28,5 +27,4 @@ if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     loop.run_until_complete(main())
     loop.close()
-
 ```
