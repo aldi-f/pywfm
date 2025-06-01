@@ -7,7 +7,7 @@ dynamic = ["version"]
 requires-python = ">=3.9"
 
 [project.urls]
-Homepage = "https://github.com/aldi-f/pywfm"
+Homepage = "https://github.com/aldi-f/warframe-market.py"
 
 [build-system]
 requires = ["hatchling", "hatch-vcs"]
