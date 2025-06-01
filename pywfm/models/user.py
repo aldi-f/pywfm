@@ -6,7 +6,7 @@ from .achievement import AchievementModel
 class UserShortModel(msgspec.Struct):
     """
     Short form user data model.
-    
+
     Attributes:
         id: Unique identifier of the user
         ingame_name: In-game name of the user
@@ -19,6 +19,7 @@ class UserShortModel(msgspec.Struct):
         activity: Current activity of the user
         last_seen: Timestamp of the user's last online presence
     """
+
     id: str
     ingame_name: str = msgspec.field(name="ingameName")
     reputation: int
@@ -34,7 +35,7 @@ class UserShortModel(msgspec.Struct):
 class UserModel(UserShortModel, kw_only=True):
     """
     Full user profile model that extends UserShortModel.
-    
+
     Additional Attributes:
         background: Optional profile background image URL
         about: Optional HTML-formatted user description
@@ -46,13 +47,15 @@ class UserModel(UserShortModel, kw_only=True):
         warn_message: Optional warning message (mod/admin only)
         ban_message: Optional ban reason (mod/admin only)
     """
+
     background: str | None = None
     about: str | None = None
     mastery_level: int | None = msgspec.field(default=None, name="masteryLevel")
-    achievement_showcase: list[AchievementModel] = msgspec.field(default_factory=list, name="achievementShowcase")
+    achievement_showcase: list[AchievementModel] = msgspec.field(
+        default_factory=list, name="achievementShowcase"
+    )
     banned: bool | None = None
     ban_until: str | None = msgspec.field(default=None, name="banUntil")
     warned: bool | None = None
     warn_message: str | None = msgspec.field(default=None, name="warnMessage")
     ban_message: str | None = msgspec.field(default=None, name="banMessage")
-

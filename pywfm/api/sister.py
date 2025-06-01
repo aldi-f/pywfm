@@ -5,6 +5,7 @@ from ..models.sister import SisterWeaponModel, SisterEphemeraModel, SisterQuirkM
 
 class SisterWeapons(BaseRequest):
     """Get list of all tradable sister weapons"""
+
     __endpoint__ = "/sister/weapons"
 
     data: List[SisterWeaponModel]
@@ -12,13 +13,16 @@ class SisterWeapons(BaseRequest):
 
 class SisterWeapon(BaseRequest):
     """Get full info about one, particular sister weapon. Requires slug"""
+
     __endpoint__ = "/sister/weapon/{slug}"
+    __slug__ = True
 
     data: SisterWeaponModel
 
 
 class SisterEphemeras(BaseRequest):
     """Get list of all tradable sister ephemeras"""
+
     __endpoint__ = "/sister/ephemeras"
 
     data: List[SisterEphemeraModel]
@@ -26,6 +30,7 @@ class SisterEphemeras(BaseRequest):
 
 class SisterQuirks(BaseRequest):
     """Get list of all tradable sister quirks"""
+
     __endpoint__ = "/sister/quirks"
 
     data: List[SisterQuirkModel]

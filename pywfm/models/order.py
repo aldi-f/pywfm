@@ -3,10 +3,11 @@ from typing import Optional
 
 from .user import UserShortModel
 
+
 class OrderModel(msgspec.Struct):
     """
     Model for trade orders.
-    
+
     Attributes:
         id: Unique identifier of the order
         type: Type of order ('buy' or 'sell')
@@ -24,6 +25,7 @@ class OrderModel(msgspec.Struct):
         item_id: Unique identifier of the involved item
         group: User-defined group for the order
     """
+
     id: str
     type: str
     platinum: int
@@ -44,10 +46,11 @@ class OrderModel(msgspec.Struct):
 class OrderWithUserModel(OrderModel, kw_only=True):
     """
     Model for trade orders with associated user information.
-    
+
     Extends the base Order model to include the user who created the order.
-    
+
     Additional Attributes:
         user: Basic profile information of the order's creator
     """
+
     user: UserShortModel

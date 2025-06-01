@@ -13,6 +13,7 @@ class _AppsData(msgspec.Struct):
     minIos: str
     minAndroid: str
 
+
 class _CollectionsData(msgspec.Struct):
     items: str
     rivens: str
@@ -22,13 +23,16 @@ class _CollectionsData(msgspec.Struct):
     npcs: str
     locations: str
 
+
 class _VersionData(msgspec.Struct):
     apps: _AppsData
     collections: _CollectionsData
     updatedAt: datetime
 
+
 class Versions(BaseRequest):
     """Get current API version"""
+
     __endpoint__ = "/versions"
 
     data: _VersionData
@@ -36,6 +40,7 @@ class Versions(BaseRequest):
 
 class Locations(BaseRequest):
     """Get list of all tradable lich weapons"""
+
     __endpoint__ = "/locations"
 
     data: List[LocationModel]
@@ -43,6 +48,7 @@ class Locations(BaseRequest):
 
 class NPCs(BaseRequest):
     """Get list of all NPCs"""
+
     __endpoint__ = "/npcs"
 
     data: List[NpcModel]
@@ -50,7 +56,7 @@ class NPCs(BaseRequest):
 
 class Missions(BaseRequest):
     """Get list of all missions"""
+
     __endpoint__ = "/missions"
 
     data: List[MissionModel]
-

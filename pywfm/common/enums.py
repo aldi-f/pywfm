@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Language(Enum):
     KOREAN = "ko"
     RUSSIAN = "ru"
@@ -13,9 +14,10 @@ class Language(Enum):
     POLISH = "pl"
     UKRAINIAN = "uk"
     ENGLISH = "en"
-	
+
     def __str__(self):
         return self.value
+
 
 class Platform(Enum):
     PC = "pc"
@@ -26,4 +28,3 @@ class Platform(Enum):
 
     def __str__(self):
         return self.value
-

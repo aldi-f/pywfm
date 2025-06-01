@@ -1,8 +1,10 @@
 import msgspec
 from ..common.options import LanguageCode
 
+
 class LocationI18NModel(msgspec.Struct):
     """Localization data for a location."""
+
     node_name: str = msgspec.field(name="nodeName")
     icon: str
     thumb: str
@@ -11,6 +13,7 @@ class LocationI18NModel(msgspec.Struct):
 
 class LocationModel(msgspec.Struct):
     """Model for locations."""
+
     id: str
     slug: str
     game_ref: str = msgspec.field(name="gameRef")

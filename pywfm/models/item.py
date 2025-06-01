@@ -1,8 +1,10 @@
 import msgspec
 from ..common.options import LanguageCode
 
+
 class ItemI18NModel(msgspec.Struct):
     """Localization data for an item."""
+
     name: str
     icon: str
     thumb: str
@@ -10,8 +12,10 @@ class ItemI18NModel(msgspec.Struct):
     wiki_link: str | None = msgspec.field(default=None, name="wikiLink")
     sub_icon: str | None = msgspec.field(default=None, name="subIcon")
 
+
 class ItemShortModel(msgspec.Struct):
     """Short form item data model."""
+
     id: str
     slug: str
     game_ref: str = msgspec.field(name="gameRef")
@@ -27,8 +31,10 @@ class ItemShortModel(msgspec.Struct):
     endo_multiplier: float | None = msgspec.field(default=None, name="endoMultiplier")
     subtypes: list[str] = msgspec.field(default_factory=list)
 
+
 class ItemModel(ItemShortModel):
     """Full item data model that extends ItemShortModel."""
+
     tradable: bool | None = None
     set_root: bool | None = msgspec.field(default=None, name="setRoot")
     set_parts: list[str] | None = msgspec.field(default=None, name="setParts")

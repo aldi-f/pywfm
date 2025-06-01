@@ -8,6 +8,7 @@ from .achievement import AchievementModel
 
 class Role(str, Enum):
     """User roles in the system."""
+
     USER = "user"
     MODERATOR = "moderator"
     ADMIN = "admin"
@@ -15,6 +16,7 @@ class Role(str, Enum):
 
 class Tier(str, Enum):
     """Subscription tiers."""
+
     NONE = "none"
     BRONZE = "bronze"
     SILVER = "silver"
@@ -24,13 +26,14 @@ class Tier(str, Enum):
 
 class LinkedAccounts(msgspec.Struct):
     """Model for linked external accounts."""
+
     pass
 
 
 class UserPrivateModel(msgspec.Struct):
     """
     Private user profile with full details and sensitive information.
-    
+
     Attributes:
         id: Unique identifier of the user
         role: User's role in the system (e.g., user, moderator, admin)
@@ -67,6 +70,7 @@ class UserPrivateModel(msgspec.Struct):
         delete_in_progress: Whether the user account deletion is in progress (mod/admin only)
         delete_at: Optional timestamp when the account deletion is scheduled (mod/admin only)
     """
+
     id: str
     role: Role
     ingame_name: str = msgspec.field(name="ingameName")
@@ -91,7 +95,9 @@ class UserPrivateModel(msgspec.Struct):
     unread_messages: int = msgspec.field(name="unreadMessages")
     # Optional fields
     avatar: str | None = None
-    achievement_showcase: List[AchievementModel] = msgspec.field(default_factory=list, name="achievementShowcase")
+    achievement_showcase: List[AchievementModel] = msgspec.field(
+        default_factory=list, name="achievementShowcase"
+    )
     ignore_list: List[str] = msgspec.field(default_factory=list, name="ignoreList")
     about: Optional[str] = None
     about_raw: Optional[str] = msgspec.field(default=None, name="aboutRaw")
@@ -100,5 +106,7 @@ class UserPrivateModel(msgspec.Struct):
     banned: Optional[bool] = None
     ban_until: Optional[str] = msgspec.field(default=None, name="banUntil")
     ban_message: Optional[str] = msgspec.field(default=None, name="banMessage")
-    delete_in_progress: Optional[bool] = msgspec.field(default=None, name="deleteInProgress")
+    delete_in_progress: Optional[bool] = msgspec.field(
+        default=None, name="deleteInProgress"
+    )
     delete_at: Optional[str] = msgspec.field(default=None, name="deleteAt")

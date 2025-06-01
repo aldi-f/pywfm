@@ -1,8 +1,10 @@
 import msgspec
 from ..common.options import LanguageCode
 
+
 class MissionI18NModel(msgspec.Struct):
     """Localization data for a mission."""
+
     name: str
     icon: str | None = None
     thumb: str | None = None
@@ -10,6 +12,7 @@ class MissionI18NModel(msgspec.Struct):
 
 class MissionModel(msgspec.Struct):
     """Model for missions."""
+
     id: str
     slug: str
     game_ref: str = msgspec.field(name="gameRef")
