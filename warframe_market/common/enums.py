@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class Language(Enum):
+    """Supported languages"""
     KOREAN = "ko"
     RUSSIAN = "ru"
     GERMAN = "de"
@@ -15,16 +16,17 @@ class Language(Enum):
     UKRAINIAN = "uk"
     ENGLISH = "en"
 
-    def __str__(self):
-        return self.value
-
 
 class Platform(Enum):
+    """Supported platforms"""
     PC = "pc"
     PS4 = "ps4"
     XBOX = "xbox"
     SWITCH = "switch"
     MOBILE = "mobile"
 
-    def __str__(self):
-        return self.value
+
+class Subtype(Enum):
+    """Item subtypes"""
+    BLUEPRINT = "blueprint"
+    CRAFTED = "crafted"
