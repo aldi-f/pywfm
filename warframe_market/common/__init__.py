@@ -5,6 +5,7 @@ BASE_STATIC_ASSETS_URL = "https://warframe.market/static/assets"
 from .enums import (
     Language,
     Platform,
+    Subtype,
 )
 
 from .base import (

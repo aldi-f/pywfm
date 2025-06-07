@@ -50,7 +50,7 @@ class BaseRequest(Base):
             endpoint = endpoint.format(slug=slug)
         if cls.__params__:
             params = "&".join(
-                f"{k}={v}" for k, v in kwargs.items() if k in cls.__params__
+                f"{k}={v}" for k, v in kwargs.items() if k in cls.__params__ and v is not None
             )
             if params:
                 endpoint += f"?{params}"
